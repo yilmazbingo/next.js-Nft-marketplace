@@ -1,0 +1,19 @@
+{
+  "name": "my new nft",
+  "description": "random",
+  "image": "https://gateway.pinata.cloud/ipfs/QmRs3FropRTZv4e6TPd9WsTFDbpHXRhaCuWivNhA2nSBos",
+  "attributes": [
+    {
+      "trait_type": "attack",
+      "value": "12"
+    },
+    {
+      "trait_type": "health",
+      "value": "12"
+    },
+    {
+      "trait_type": "speed",
+      "value": "23"
+    }
+  ]
+}
