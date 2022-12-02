@@ -9,5 +9,3 @@
 truffle migrate --network goerli
 
 - https://passwordsgenerator.net/ , https://1password.com/password-generator/ to create better passwords
-
-- storing data on server means, we can decode it.
