@@ -10,6 +10,13 @@ import {
 import FormData from "form-data";
 import { FileReq } from "@_types/nft";
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "50mb",
+    },
+  },
+};
 export default withSession(
   async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {

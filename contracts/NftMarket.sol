@@ -29,7 +29,7 @@ contract NftMarket is ERC721URIStorage, Ownable {
     struct NftItem {
         uint tokenId;
         uint price;
-        // creator and owner are not same. creator someone who minted. creator does not change
+        // creator and owner are not same. creator someone who minted but creator does not change
         address creator;
         bool isListed;
     }
@@ -49,11 +49,10 @@ contract NftMarket is ERC721URIStorage, Ownable {
     }
 
     // price is the price of the nft to be sold, msg.value is the listing price paid to the marketplace
-    function mintToken(string memory tokenURI, uint price)
-        public
-        payable
-        returns (uint)
-    {
+    function mintToken(
+        string memory tokenURI,
+        uint price
+    ) public payable returns (uint) {
         require(!tokenURIExists(tokenURI), "Token URI already exists");
         require(
             msg.value == listingPrice,
@@ -99,11 +98,10 @@ contract NftMarket is ERC721URIStorage, Ownable {
         return _allNfts[index];
     }
 
-    function tokenOfOwnerByIndex(address owner, uint index)
-        public
-        view
-        returns (uint)
-    {
+    function tokenOfOwnerByIndex(
+        address owner,
+        uint index
+    ) public view returns (uint) {
         //_balances[owner] |  mapping(address => uint256) private _balances
         require(index < ERC721.balanceOf(owner), "Index out of bounds");
         return _ownedTokens[owner][index];
@@ -197,9 +195,10 @@ contract NftMarket is ERC721URIStorage, Ownable {
         _idToOwnedIndex[tokenId] = length;
     }
 
-    function _removeTokenFromOwnerEnumeration(address from, uint tokenId)
-        private
-    {
+    function _removeTokenFromOwnerEnumeration(
+        address from,
+        uint tokenId
+    ) private {
         uint lastTokenIndex = ERC721.balanceOf(from) - 1;
         // I want to remove this
         uint tokenIndex = _idToOwnedIndex[tokenId];

@@ -17,7 +17,7 @@ const NftCreate: NextPage = () => {
   const { ethereum, contract } = useWeb3();
   const [nftURI, setNftURI] = useState("");
   const [hasURI, setHasURI] = useState(false);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("");
   const [nftMeta, setNftMeta] = useState<NftMeta>({
     name: "",
     description: "",
@@ -113,8 +113,8 @@ const NftCreate: NextPage = () => {
       });
       const res = await toast.promise(promise, {
         pending: "Uploading Image",
-        success: "Image Upload",
-        error: "Image upload",
+        success: "Image Uploaded",
+        error: "Uploading Error",
       });
       const data = res.data as PinataRes;
       setNftMeta({
@@ -183,10 +183,10 @@ const NftCreate: NextPage = () => {
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
               <div className="px-4 sm:px-0">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                <h3 className="text-lg font-medium leading-6 text-white">
                   List NFT
                 </h3>
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-400">
                   This information will be displayed publicly so be careful what
                   you share.
                 </p>
@@ -237,9 +237,7 @@ const NftCreate: NextPage = () => {
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
-                          onChange={(e) =>
-                            setPrice(parseInt(e.target.value, 10))
-                          }
+                          onChange={(e) => setPrice(e.target.value)}
                           value={price}
                           type="number"
                           name="price"
@@ -267,10 +265,10 @@ const NftCreate: NextPage = () => {
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
               <div className="px-4 sm:px-0">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                <h3 className="text-lg font-medium leading-6 text-white">
                   Create NFT Metadata
                 </h3>
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-400">
                   This information will be displayed publicly so be careful what
                   you share.
                 </p>
