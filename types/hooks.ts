@@ -20,3 +20,6 @@ export type CryptoHandlerHook<D = any, R = any, P = any> = (
 ) => CryptoSWRResponse<D, R>;
 
 export type CryptoSWRResponse<D = any, R = any> = SWRResponse<D> & R;
+export type UseOwnedNftsResponse = {
+  listNft: (tokenId: number, price: number) => Promise<void>;
+};

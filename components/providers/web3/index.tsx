@@ -16,6 +16,7 @@ import {
 } from "./utils";
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import { NftMarketContract } from "@_types/nftMarketContract";
+import { ExternalProvider } from "@ethersproject/providers";
 
 const pageReload = () => window.location.reload();
 
@@ -49,9 +50,9 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
     async function initWeb3() {
       try {
         const provider = new ethers.providers.Web3Provider(
-          // ask here
-          window.ethereum as any
+          window.ethereum as unknown as ExternalProvider
         );
+
         // in brave browser i had a refresh after load the app
         setTimeout(() => setGlobalListeners(window.ethereum), 400);
         const contract = await loadContract("NftMarket", provider);

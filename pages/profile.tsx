@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import type { NextPage } from "next";
-import { BaseLayout } from "@ui";
+import { BaseLayout, SideBar } from "@ui";
 
 import { Nft } from "@_types/nft";
 import { useOwnedNfts } from "@hooks/web3";
@@ -16,6 +16,7 @@ function classNames(...classes: string[]) {
 const Profile: NextPage = () => {
   const [activeNft, setActiveNft] = useState<Nft>();
   const { nfts } = useOwnedNfts();
+  // console.log("nfts from useOwnedNfts", nfts);
 
   useEffect(() => {
     if (nfts.data && nfts.data.length > 0) {
@@ -114,7 +115,7 @@ const Profile: NextPage = () => {
             </main>
 
             {/* Details sidebar */}
-            <aside className="hidden w-96 bg-white p-8 border-l border-gray-200 overflow-y-auto lg:block">
+            {/* <aside className="hidden w-96 bg-white p-8 border-l border-gray-200 overflow-y-auto lg:block">
               {activeNft && (
                 <div className="pb-16 space-y-6">
                   <div>
@@ -175,7 +176,8 @@ const Profile: NextPage = () => {
                   </div>
                 </div>
               )}
-            </aside>
+            </aside> */}
+            <SideBar activeNft={activeNft} nfts={nfts} />
           </div>
         </div>
       </div>

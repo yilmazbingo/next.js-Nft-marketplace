@@ -13,6 +13,7 @@ const Home: NextPage = () => {
         <div className="absolute inset-0">
           <div className="bg-white h-1/3 sm:h-2/3" />
         </div>
+
         <div className="relative">
           <div className="text-center">
             <h2 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">

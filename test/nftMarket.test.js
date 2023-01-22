@@ -8,6 +8,7 @@ contract("Nft Market", (accounts) => {
 
   before(async () => {
     _contract = await NftMarket.deployed();
+    console.log("contrcat tx", _contract);
   });
 
   describe("Mint token function", () => {

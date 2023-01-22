@@ -4,6 +4,7 @@ import { Web3Dependencies } from "@_types/hooks";
 import { NftMarketContract } from "@_types/nftMarketContract";
 import { Contract, ethers, providers } from "ethers";
 
+const a = ethers.Signer;
 declare global {
   interface Window {
     ethereum: MetaMaskInpageProvider;

@@ -1,13 +1,10 @@
-import { CryptoHookFactory } from "@_types/hooks";
+import { CryptoHookFactory, UseOwnedNftsResponse } from "@_types/hooks";
 import { Nft } from "@_types/nft";
 import { ethers } from "ethers";
 import { useCallback } from "react";
 import useSWR from "swr";
 import { toast } from "react-toastify";
 
-type UseOwnedNftsResponse = {
-  listNft: (tokenId: number, price: number) => Promise<void>;
-};
 type OwnedNftsHookFactory = CryptoHookFactory<Nft[], UseOwnedNftsResponse>;
 
 export type UseOwnedNftsHook = ReturnType<OwnedNftsHookFactory>;

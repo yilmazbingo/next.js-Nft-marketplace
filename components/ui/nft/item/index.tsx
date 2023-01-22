@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+import { Modal, SideBar } from "@ui";
 import { Nft } from "@_types/nft";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState, useEffect, useRef } from "react";
 import NftList from "../list";
 
 type NftItemProps = {
@@ -12,6 +13,25 @@ function shortifyAddress(address: string) {
   return `0x****${address.slice(-4)}`;
 }
 const NftItem: FunctionComponent<NftItemProps> = ({ item, buyNft }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const divEl = useRef<HTMLElement>() as React.MutableRefObject<HTMLDivElement>;
+
+  useEffect(() => {
+    const handler = (event: MouseEvent) => {
+      if (!divEl.current) {
+        return;
+      }
+      if (!divEl.current.contains(event.target as Node)) {
+        console.log("click detected");
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("click", handler, true);
+    return () => {
+      return document.removeEventListener("click", handler);
+    };
+  }, []);
   return (
     <>
       <div className="flex-shrink-0">
@@ -95,11 +115,19 @@ const NftItem: FunctionComponent<NftItemProps> = ({ item, buyNft }) => {
             Buy
           </button>
           <button
+            onClick={() => setIsOpen(true)}
             type="button"
             className="disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none disabled:cursor-not-allowed inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Preview
           </button>
+          {isOpen && (
+            <Modal isOpen={true}>
+              <div ref={divEl}>
+                <SideBar activeNft={item} />
+              </div>
+            </Modal>
+          )}
         </div>
       </div>
     </>

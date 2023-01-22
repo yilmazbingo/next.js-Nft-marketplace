@@ -36,6 +36,7 @@ export default withSession(
       });
       try {
         const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
+
         const fileRes = await axios.post(url, formData, {
           maxBodyLength: Infinity,
           headers: {
