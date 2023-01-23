@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Nft } from "@_types/nft";
 import { CryptoSWRResponse, UseOwnedNftsResponse } from "@_types/hooks";
 
@@ -8,7 +9,27 @@ type SideBarProps = {
 };
 
 export default function SideBar({ activeNft, nfts }: SideBarProps) {
-  console.log("activenft", activeNft);
+  const [downloadURL, setDownloadURL] = useState("");
+  console.log("ActiveNft", activeNft);
+  const download = async () => {
+    const result = await fetch(activeNft.meta.image, {
+      method: "GET",
+      headers: {},
+    });
+    // const b = await result.json();  ailed to execute 'blob' on 'Response': body stream already read
+    const blob = await result.blob();
+    console.log("blob", blob);
+    const url = URL.createObjectURL(blob);
+    setDownloadURL(url);
+  };
+  const handleDownload = async () => {
+    try {
+      await download();
+      URL.revokeObjectURL(downloadURL);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <aside className="hidden w-96 bg-white p-8 border-l border-gray-200 overflow-y-auto lg:block">
       {activeNft && (
@@ -46,10 +67,13 @@ export default function SideBar({ activeNft, nfts }: SideBarProps) {
 
           <div className="flex">
             <button
+              onClick={handleDownload}
               type="button"
               className="flex-1 bg-indigo-600 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Download Image
+              <a href={downloadURL} download={activeNft.meta.name}>
+                Download Image
+              </a>
             </button>
 
             <button
