@@ -24,7 +24,7 @@ export const hookFactory: AccountHookFactory =
       async () => {
         // ! tells that I am sure that provider exists at this point
         const accounts = await provider!.listAccounts();
-        console.log("accounts from metemask", accounts);
+        // console.log("accounts from metemask", accounts);
         const account = accounts[0];
         if (!account) {
           throw "Cannot retrieve account";
@@ -33,7 +33,7 @@ export const hookFactory: AccountHookFactory =
       },
       {
         // otherwise when I click on the window, it would run the function again
-        revalidateOnFocus: false,
+        revalidateOnFocus: false, // When you re-focus a page or switch between tabs, SWR automatically revalidates data.
         shouldRetryOnError: false,
       }
     );

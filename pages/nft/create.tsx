@@ -10,6 +10,7 @@ import { NftMeta, PinataRes } from "@_types/nft";
 import { useWeb3 } from "@providers/web3";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
+import usePathName from "../../utilityHooks/usePathName";
 
 const ALLOWED_FIELDS = ["name", "description", "image", "attributes"];
 
@@ -28,6 +29,8 @@ const NftCreate: NextPage = () => {
       { trait_type: "speed", value: "0" },
     ],
   });
+  const { postId } = usePathName();
+  console.log("postId", postId);
   const getSignedData = async () => {
     const messageToSign = await axios.get("/api/verify");
     const accounts = (await ethereum?.request({
