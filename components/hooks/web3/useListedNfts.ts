@@ -32,6 +32,11 @@ export const hookFactory: ListedNftsHookFactory =
               Accept: "text/plain",
             },
           });
+
+          // const metaRes = await fetch("/api/meta", {
+          //   method: "POST",
+          //   body: JSON.stringify(tokenURI),
+          // });
           console.log("metaRes", metaRes);
           let meta;
           try {

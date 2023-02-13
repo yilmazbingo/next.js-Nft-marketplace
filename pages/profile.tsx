@@ -86,7 +86,7 @@ const Profile: NextPage = () => {
                           )}
                         >
                           <img
-                            src={nft.meta.image}
+                            src={nft.meta && nft.meta.image}
                             alt=""
                             className={classNames(
                               nft.tokenId === activeNft?.tokenId

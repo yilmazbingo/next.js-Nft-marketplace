@@ -21,11 +21,8 @@ export const hookFactory: OwnedNftsHookFactory =
         for (let i = 0; i < coreNfts.length; i++) {
           const item = coreNfts[i];
           const tokenURI = await contract!.tokenURI(item.tokenId);
-          // const metaRes = await fetch(tokenURI);
-          const metaRes = await fetch("/api/meta", {
-            method: "POST",
-            body: JSON.stringify(tokenURI),
-          });
+          const metaRes = await fetch(tokenURI);
+
           console.log("metaRes in used owned hook ", metaRes);
           let meta;
           try {
