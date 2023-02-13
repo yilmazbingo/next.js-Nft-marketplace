@@ -27,7 +27,11 @@ export const hookFactory: ListedNftsHookFactory =
           const tokenURI = await contract!.tokenURI(item.tokenId);
           console.log("tokenUri is saved like this in blockchain", tokenURI);
 
-          const metaRes = await fetch(tokenURI);
+          const metaRes = await fetch(tokenURI, {
+            headers: {
+              Accept: "text/plain",
+            },
+          });
           console.log("metaRes", metaRes);
           let meta;
           try {
