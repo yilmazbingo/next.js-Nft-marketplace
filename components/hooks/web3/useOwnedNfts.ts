@@ -58,7 +58,7 @@ export const hookFactory: OwnedNftsHookFactory =
           await toast.promise(result!.wait(), {
             pending: "Processing transaction",
             success: "Item has been listed",
-            error: "Processing error",
+            error: "Proces error",
           });
         } catch (e) {
           console.error(e);

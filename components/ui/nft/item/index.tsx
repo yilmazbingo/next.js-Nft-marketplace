@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { useOwnedNfts } from "@hooks/web3";
-import { Modal, SideBar } from "@ui";
+import { useListedNfts, useOwnedNfts } from "@hooks/web3";
+import { Modal, ModalPreview } from "@ui";
 import { Nft } from "@_types/nft";
 import { FunctionComponent, useState, useEffect, useRef } from "react";
 import NftList from "../list";
@@ -18,7 +18,7 @@ const NftItem: FunctionComponent<NftItemProps> = ({ item, buyNft }) => {
 
   const divEl = useRef<HTMLElement>() as React.MutableRefObject<HTMLDivElement>;
 
-  const { nfts } = useOwnedNfts();
+  const { nfts } = useListedNfts();
 
   useEffect(() => {
     const handler = (event: MouseEvent) => {
@@ -39,7 +39,7 @@ const NftItem: FunctionComponent<NftItemProps> = ({ item, buyNft }) => {
     <>
       <div className="flex-shrink-0">
         <img
-          className={`h-full w-full object-cover`}
+          className="h-96 w-full object-fill"
           src={item.meta.image}
           alt="New NFT"
         />
@@ -127,7 +127,7 @@ const NftItem: FunctionComponent<NftItemProps> = ({ item, buyNft }) => {
           {isOpen && (
             <Modal isOpen={true}>
               <div ref={divEl}>
-                <SideBar activeNft={item} nfts={nfts} />
+                <ModalPreview nft={item} />
               </div>
             </Modal>
           )}

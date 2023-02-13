@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { getIronSession } from "iron-session";
 import axios from "axios";
 import { withIronSessionSsr } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -19,11 +20,14 @@ declare module "iron-session" {
     };
   }
 }
+// the purpose of session is to have req.session.messageSession
 export default withSession(
   async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
       try {
         const { body } = req;
+        console.log("request received ", body);
+
         const nft = body.nft as NftMeta;
         if (!nft.name || !nft.description || !nft.attributes) {
           return res.status(422).send({ message: "Form data is missing" });
@@ -41,6 +45,7 @@ export default withSession(
           },
           {
             headers: {
+              Accept: "text/plain",
               pinata_api_key: pinataApiKey,
               pinata_secret_api_key: pinataSecretApiKey,
             },

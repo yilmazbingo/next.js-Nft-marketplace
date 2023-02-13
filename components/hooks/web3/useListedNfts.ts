@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import useSWR from "swr";
 import { toast } from "react-toastify";
 
-type UseListedNftsResponse = {
+export type UseListedNftsResponse = {
   buyNft: (token: number, value: number) => Promise<void>;
 };
 type ListedNftsHookFactory = CryptoHookFactory<Nft[], UseListedNftsResponse>;
@@ -20,7 +20,7 @@ export const hookFactory: ListedNftsHookFactory =
       async () => {
         const nfts = [] as Nft[];
         const coreNfts = await contract!.getAllNftsOnSale();
-        console.log("corenfts", coreNfts);
+        // console.log("corenfts", coreNfts);
         for (let i = 0; i < coreNfts.length; i++) {
           const item = coreNfts[i];
           // debugger;
@@ -56,15 +56,23 @@ export const hookFactory: ListedNftsHookFactory =
       async (tokenId: number, value: number) => {
         try {
           // we send value in wei
-          const result = await _contract?.buyNft(tokenId, {
+          console.log("_contract", ethers.utils.parseEther(value.toString()));
+          const result = _contract!.buyNft(tokenId, {
             value: ethers.utils.parseEther(value.toString()),
           });
-          await toast.promise(result!.wait(), {
+          console.log("result", result);
+          await toast.promise(result, {
             pending: "Processing transaction",
             success: "Nft is yours! Go to profile page",
-            error: "Processing error",
+            error: "Error purchasing nft",
           });
-        } catch (error) {
+        } catch (error: any) {
+          // if (error.code === -32603 && error.data.code === -32000) {
+          //   // This was your error code
+          //   toast.error("Error message because of insufficient funds ...");
+          // } else {
+          //   toast.error("Error message for the other types of errors");
+          // }
           console.error("eror in buying nfts", error);
         }
       },

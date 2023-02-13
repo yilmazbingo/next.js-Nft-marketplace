@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
+import { ObjectId } from "mongodb";
+
 import {
   addressCheckMiddleware,
   withSession,
@@ -41,6 +43,7 @@ export default withSession(
           maxBodyLength: Infinity,
           headers: {
             "Content-Type": `multipart/form-data: boundary=${formData.getBoundary()}`,
+            Accept: "text/plain",
             pinata_api_key: pinataApiKey,
             pinata_secret_api_key: pinataSecretApiKey,
           },

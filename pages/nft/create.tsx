@@ -10,7 +10,6 @@ import { NftMeta, PinataRes } from "@_types/nft";
 import { useWeb3 } from "@providers/web3";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
-import usePathName from "../../utilityHooks/usePathName";
 
 const ALLOWED_FIELDS = ["name", "description", "image", "attributes"];
 
@@ -29,9 +28,9 @@ const NftCreate: NextPage = () => {
       { trait_type: "speed", value: "0" },
     ],
   });
-  const { postId } = usePathName();
-  console.log("postId", postId);
+
   const getSignedData = async () => {
+    // we get contract address and id
     const messageToSign = await axios.get("/api/verify");
     const accounts = (await ethereum?.request({
       method: "eth_requestAccounts",
@@ -65,7 +64,7 @@ const NftCreate: NextPage = () => {
       (attr) => attr.trait_type === name
     );
     nftMeta.attributes[attributeIndex].value = value;
-    // we dont need pass attributes: nftMeta.attributes because we already mutated
+    // we dont need pass attributes: nftMeta.attributes because we already mutated. this will rerender it
     setNftMeta({ ...nftMeta, attributes: nftMeta.attributes });
   };
 
@@ -131,7 +130,9 @@ const NftCreate: NextPage = () => {
 
   const createNft = async () => {
     try {
-      const nftRes = await axios.get(nftURI);
+      const nftRes = await axios.get(nftURI, {
+        headers: { Accept: "text/plain" },
+      });
       const content = nftRes.data;
       // verify if we are getting json
       Object.keys(content).forEach((key) => {
@@ -139,7 +140,7 @@ const NftCreate: NextPage = () => {
           throw new Error("Invalid JSON structure");
         }
       });
-      const tx = await contract?.mintToken(
+      const tx = contract?.mintToken(
         nftURI,
         ethers.utils.parseEther(price.toString()),
         {
@@ -147,7 +148,7 @@ const NftCreate: NextPage = () => {
           value: ethers.utils.parseEther((0.025).toString()),
         }
       );
-      await toast.promise(tx!.wait(), {
+      await toast.promise(tx!, {
         pending: "Minting Nft Token",
         success: "Nft has ben created!",
         error: "Minting error!",
