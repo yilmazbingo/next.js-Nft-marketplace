@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Nft } from "@_types/nft";
 import { CryptoSWRResponse, UseOwnedNftsResponse } from "@_types/hooks";
+import Image from "next/image";
 import { UseListedNftsResponse } from "components/hooks/web3/useListedNfts";
 type SideBarProps = {
   activeNft: Nft | undefined;
@@ -44,6 +45,18 @@ export default function SideBar({ activeNft, nfts }: SideBarProps) {
   };
   return (
     <aside className="hidden w-96 bg-white p-8 border-l border-gray-200 overflow-y-auto lg:block">
+      {!activeNft && (
+        <div>
+          <Image
+            width={50}
+            height={65}
+            className="inset-0"
+            layout="responsive"
+            src="/images/placeholder.png"
+            alt=""
+          />
+        </div>
+      )}
       {activeNft && (
         <div className="pb-16 space-y-6">
           <div>

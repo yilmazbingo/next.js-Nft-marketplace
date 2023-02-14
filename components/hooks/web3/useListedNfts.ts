@@ -23,41 +23,42 @@ export const hookFactory: ListedNftsHookFactory =
         // console.log("corenfts", coreNfts);
         for (let i = 0; i < coreNfts.length; i++) {
           const item = coreNfts[i];
-          // debugger;
           const tokenURI = await contract!.tokenURI(item.tokenId);
           console.log("tokenUri is saved like this in blockchain", tokenURI);
-
-          const metaRes = await fetch(tokenURI, {
-            headers: {
-              Accept: "text/plain",
-            },
-          });
-
-          // const metaRes = await fetch("/api/meta", {
-          //   method: "POST",
-          //   body: JSON.stringify(tokenURI),
-          // });
-          console.log("metaRes", metaRes);
           let meta;
           try {
+            const metaRes = await fetch(tokenURI, {
+              headers: {
+                Accept: "text/plain",
+              },
+            });
+
+            // const metaRes = await fetch("/api/meta", {
+            //   method: "POST",
+            //   body: JSON.stringify(tokenURI),
+            // });
+            console.log("metaRes", metaRes);
+
             meta = await metaRes.json();
+            if (meta) {
+              console.log("meta", meta);
+              nfts.push({
+                price: parseFloat(ethers.utils.formatEther(item.price)),
+                tokenId: item.tokenId.toNumber(),
+                creator: item.creator,
+                isListed: item.isListed,
+                meta,
+              });
+            }
           } catch (error) {
             console.log("error in json fetch", error);
           }
-
-          console.log("meta", meta);
-          nfts.push({
-            price: parseFloat(ethers.utils.formatEther(item.price)),
-            tokenId: item.tokenId.toNumber(),
-            creator: item.creator,
-            isListed: item.isListed,
-            meta,
-          });
         }
-        console.log("nfts---", nfts);
+
         return nfts;
       }
     );
+
     // React Hook useCallback has an unnecessary dependency: 'contract'. Either exclude it or remove the dependency array. Outer scope values like 'contract' aren't valid dependencies because mutating them doesn't re-render the component.
     // since contract is passed from outer scope, I need to create a new constant as inner obj
     const _contract = contract;
@@ -65,15 +66,13 @@ export const hookFactory: ListedNftsHookFactory =
       async (tokenId: number, value: number) => {
         try {
           // we send value in wei
-          console.log("_contract", ethers.utils.parseEther(value.toString()));
           const result = _contract!.buyNft(tokenId, {
             value: ethers.utils.parseEther(value.toString()),
           });
-          console.log("result", result);
           await toast.promise(result, {
             pending: "Processing transaction",
             success: "Nft is yours! Go to profile page",
-            error: "Error purchasing nft",
+            // error: "Check your balance and make sure",
           });
         } catch (error: any) {
           // if (error.code === -32603 && error.data.code === -32000) {
@@ -82,7 +81,16 @@ export const hookFactory: ListedNftsHookFactory =
           // } else {
           //   toast.error("Error message for the other types of errors");
           // }
-          console.error("eror in buying nfts", error);
+          console.error("eror in buying nfts", error.code);
+
+          if (error.code === -32603 && error.data.code === -32000) {
+            // This was your error code
+            toast.error("Error message because of insufficient funds ...");
+          } else if (error.code === "UNPREDICTABLE_GAS_LIMIT") {
+            toast.error("You already own this nft");
+          } else {
+            toast.error("Unknown error");
+          }
         }
       },
       [_contract]

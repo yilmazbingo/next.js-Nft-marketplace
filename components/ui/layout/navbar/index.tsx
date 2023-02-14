@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ActiveLink } from "../../..";
 import { useAccount, useNetwork } from "@hooks/web3";
 import Walletbar from "./Walletbar";
+import { useRouter } from "next/router";
 
 const navigation = [
   { name: "Marketplace", href: "/", current: true },
@@ -21,7 +22,7 @@ function classNames(...classes: string[]) {
 export default function Navbar() {
   const { account } = useAccount();
   const { network } = useNetwork();
-  // console.log("account", account);
+  const router = useRouter();
 
   return (
     // The button will automatically open/close the panel when clicked, and all components will receive the appropriate aria-* related attributes like aria-expanded and aria-controls.
@@ -46,7 +47,10 @@ export default function Navbar() {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 {/* If the size of all flex items is larger than the flex container, items shrink to fit according to flex-shrink. */}
-                <div className="flex-shrink-0 flex items-center">
+                <div
+                  className="flex-shrink-0 flex items-center"
+                  onClick={() => router.push("/")}
+                >
                   <img
                     className="hidden lg:block h-10 w-auto"
                     src="/images/page_logo.png"
