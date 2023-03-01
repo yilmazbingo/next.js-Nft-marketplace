@@ -7,7 +7,7 @@ import {
   withSession,
   contractAddress,
   addressCheckMiddleware,
-  pinataApiKey,
+  pinataJWTKey,
   pinataSecretApiKey,
 } from "./utils";
 import { NftMeta } from "@_types/nft";
@@ -46,8 +46,10 @@ export default withSession(
           {
             headers: {
               Accept: "text/plain",
-              pinata_api_key: pinataApiKey,
-              pinata_secret_api_key: pinataSecretApiKey,
+              // those are old apis
+              // pinata_api_key: pinataApiKey,
+              // pinata_secret_api_key: pinataSecretApiKey,
+              Authorization: `Bearer ${pinataJwtKey}`,
             },
           }
         );

@@ -48,7 +48,7 @@ export default withSession(
             // --those are old api---
             // pinata_api_key: pinataApiKey,
             // pinata_secret_api_key: pinataSecretApiKey,
-            Authorization: "Bearer " + pinataJWTKey,
+            Authorization: `Bearer ${pinataJwtKey}`,
           },
         });
         console.log("fileRes", fileRes.data);
