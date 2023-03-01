@@ -8,6 +8,7 @@ import {
   withSession,
   pinataApiKey,
   pinataSecretApiKey,
+  pinataJWTKey,
 } from "./utils";
 import FormData from "form-data";
 import { FileReq } from "@_types/nft";
@@ -44,8 +45,10 @@ export default withSession(
           headers: {
             "Content-Type": `multipart/form-data: boundary=${formData.getBoundary()}`,
             Accept: "text/plain",
-            pinata_api_key: pinataApiKey,
-            pinata_secret_api_key: pinataSecretApiKey,
+            // --those are old api---
+            // pinata_api_key: pinataApiKey,
+            // pinata_secret_api_key: pinataSecretApiKey,
+            Authorization: "Bearer " + pinataJWTKey,
           },
         });
         console.log("fileRes", fileRes.data);

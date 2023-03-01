@@ -19,7 +19,7 @@ const abi = contract.abi;
 export const contractAddress = contract["networks"][targetNetwork]["address"];
 export const pinataApiKey = process.env.PINATA_API_KEY as string;
 export const pinataSecretApiKey = process.env.PINATA_SECRET_KEY as string;
-
+export const pinataJWTKey = process.env.PINATA_JWT_KEY as string;
 // handle is the wrapper function
 export function withSession(handler: any) {
   return withIronSessionApiRoute(handler, {
