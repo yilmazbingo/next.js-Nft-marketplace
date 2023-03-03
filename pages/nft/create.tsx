@@ -134,6 +134,7 @@ const NftCreate: NextPage = () => {
         headers: { Accept: "text/plain" },
       });
       const content = nftRes.data;
+      console.log("content before creatng nft", content);
       // verify if we are getting json
       Object.keys(content).forEach((key) => {
         if (!ALLOWED_FIELDS.includes(key)) {
@@ -154,7 +155,7 @@ const NftCreate: NextPage = () => {
         error: "Minting error!",
       });
     } catch (e: any) {
-      console.error(e.message);
+      console.error("error in list or creating nft", e.message);
     }
   };
 
@@ -258,7 +259,7 @@ const NftCreate: NextPage = () => {
                       type="button"
                       className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                      List
+                      List Nft
                     </button>
                   </div>
                 </div>

@@ -44,11 +44,11 @@ export default withSession(
           maxBodyLength: Infinity,
           headers: {
             "Content-Type": `multipart/form-data: boundary=${formData.getBoundary()}`,
-            Accept: "text/plain",
+            // Accept: "text/plain",
             // --those are old api---
             // pinata_api_key: pinataApiKey,
             // pinata_secret_api_key: pinataSecretApiKey,
-            Authorization: `Bearer ${pinataJwtKey}`,
+            Authorization: `Bearer ${pinataJWTKey}`,
           },
         });
         console.log("fileRes", fileRes.data);

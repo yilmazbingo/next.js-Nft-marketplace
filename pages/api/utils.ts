@@ -17,6 +17,7 @@ const targetNetwork = process.env.NEXT_PUBLIC_NETWORK_ID as keyof NETWORK;
 const abi = contract.abi;
 
 export const contractAddress = contract["networks"][targetNetwork]["address"];
+console.log("contract Address", contractAddress);
 export const pinataApiKey = process.env.PINATA_API_KEY as string;
 export const pinataSecretApiKey = process.env.PINATA_SECRET_KEY as string;
 export const pinataJWTKey = process.env.PINATA_JWT_KEY as string;
@@ -32,6 +33,10 @@ export function withSession(handler: any) {
   });
 }
 
+const url =
+  process.env.NODE_ENV === "production"
+    ? process.env.INFURA_GOERLI_URL
+    : "http://127.0.0.1:7545";
 export const addressCheckMiddleware = async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -39,9 +44,7 @@ export const addressCheckMiddleware = async (
   return new Promise(async (resolve, reject) => {
     const message = req.session.messageSession;
     // getting contract on serverside
-    const provider = new ethers.providers.JsonRpcProvider(
-      "http://127.0.0.1:7545"
-    );
+    const provider = new ethers.providers.JsonRpcProvider(url);
     const contract = new ethers.Contract(
       contractAddress,
       abi,
