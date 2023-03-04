@@ -7,7 +7,6 @@ export default async function meta(req: NextApiRequest, res: NextApiResponse) {
     const tokenURI = JSON.parse(req.body);
     const metaRes = await fetch(tokenURI);
     const data = await metaRes.json();
-    console.log("data in server", data);
     return res.json(data);
   } else {
     res.setHeader("Allow", ["GET", "PUT"]);

@@ -59,6 +59,10 @@ export const loadContract = async (
 
   const Artifact = await res.json();
   if (Artifact.networks[NETWORK_ID].address) {
+    console.log(
+      "Artifact.networks[NETWORK_ID].address",
+      Artifact.networks[NETWORK_ID].address
+    );
     const contract = new ethers.Contract(
       Artifact.networks[NETWORK_ID].address,
       Artifact.abi,
