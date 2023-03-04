@@ -10,7 +10,6 @@ module.exports = {
     // },
     goerli: {
       networkCheckTimeout: 10000,
-      networkCheckTimeout: 10000,
       provider: () =>
         new HDWalletProvider(keys.PRIVATE_KEY, keys.INFURA_GOERLI_URL),
       network_id: 5,
