@@ -23,7 +23,9 @@ const NftList: FunctionComponent = () => {
   } else {
     return (
       <div>
-        <h2>there is no nft</h2>
+        <h2 className="capitalize text-center mt-3 text-blue-700 ">
+          there is no NFT minted
+        </h2>
       </div>
     );
   }

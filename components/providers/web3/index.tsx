@@ -77,7 +77,9 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
       }
     }
     initWeb3();
-    return () => removeGlobalListeners(window.ethereum);
+    return () => {
+      removeGlobalListeners(window.ethereum);
+    };
   }, []);
 
   return (

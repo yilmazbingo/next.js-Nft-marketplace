@@ -3,9 +3,16 @@ import type { NextPage } from "next";
 import { NftList, BaseLayout } from "@ui";
 import { useNetwork } from "@hooks/web3";
 import { ExclamationIcon } from "@heroicons/react/solid";
-
+import { useEffect } from "react";
 const Home: NextPage = () => {
   const { network } = useNetwork();
+
+  useEffect(() => {
+    const referrer = document.referrer;
+    if (referrer !== null) {
+      console.log(`I was redirected from ${referrer}`);
+    }
+  }, []);
 
   return (
     <BaseLayout>

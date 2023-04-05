@@ -23,6 +23,7 @@ export const hookFactory: AccountHookFactory =
       provider ? "web3/useAccount" : null,
       async () => {
         // ! tells that I am sure that provider exists at this point
+
         const accounts = await provider!.listAccounts();
         // console.log("accounts from metemask", accounts);
         const account = accounts[0];
